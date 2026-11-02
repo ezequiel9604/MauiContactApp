@@ -61,7 +61,6 @@ namespace ContactApp.ViewModels
                 var response = await _service.UpdateContactAsync(contact);
                 if (response.IsSuccessStatusCode)
                 {
-                    // Update the contact in the ObservableCollection
                     var existingContact = Contacts.FirstOrDefault(c => c.Id == contact.Id);
                     if (existingContact != null)
                     {
@@ -97,7 +96,6 @@ namespace ContactApp.ViewModels
                 var response = await _service.DeleteContactAsync(contactId);
                 if (response.IsSuccessStatusCode)
                 {
-                    // Remove the contact from the ObservableCollection
                     var existingContact = Contacts.FirstOrDefault(c => c.Id == contactId);
                     if (existingContact != null)
                     {
