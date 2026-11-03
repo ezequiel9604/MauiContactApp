@@ -4,8 +4,7 @@ namespace ContactApp.Models
 {
     public class Contact
     {
-        private static int _nextId = 1;
-        public int Id { get; set; }
+        public string _Id { get; set; } = string.Empty;
         public string Initials { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
@@ -15,14 +14,10 @@ namespace ContactApp.Models
 
         public bool IsDeleted { get; set; } = false;
 
-        public Contact()
-        {
-            Id = _nextId++;
-        }
+        public Contact() { }
 
         public Contact(string name, string phone)
         {
-            Id = _nextId++;
             Initials = GetInitials(name);
             Name = name;
             PhoneNumber = phone;
@@ -47,7 +42,7 @@ namespace ContactApp.Models
 
         public Contact(Contact contact)
         {
-            Id = _nextId++;
+            _Id = contact._Id;
             Initials = contact.Initials;
             Name = contact.Name;
             PhoneNumber = contact.PhoneNumber;

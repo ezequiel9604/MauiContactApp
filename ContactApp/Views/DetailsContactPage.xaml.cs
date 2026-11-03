@@ -23,8 +23,7 @@ public partial class DetailsContactPage : ContentPage
 
     private void LoadContact(string id)
     {
-        int contactId = int.TryParse(id, out var parsedId) ? parsedId : -1;
-        _contact = _viewModel.Contacts.FirstOrDefault(c => c.Id == contactId);
+        _contact = _viewModel.Contacts.FirstOrDefault(c => c._Id == id);
         BindingContext = _contact;
     }
 

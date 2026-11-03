@@ -45,10 +45,10 @@ namespace ContactApp.Services
 
         public async Task<HttpResponseMessage> UpdateContactAsync(Contact contact)
         {
-            return await _httpClient.PatchAsJsonAsync($"contacts/{contact.Id}", contact);
+            return await _httpClient.PatchAsJsonAsync($"contacts/{contact._Id}", contact);
         }
 
-        public async Task<HttpResponseMessage> DeleteContactAsync(int contactId)
+        public async Task<HttpResponseMessage> DeleteContactAsync(string contactId)
         {
             return await _httpClient.DeleteAsync($"contacts/{contactId}");
         }

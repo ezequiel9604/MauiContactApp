@@ -108,7 +108,7 @@ public partial class ContactPage : ContentPage
                 $"Are you sure you want to delete {contact.Name}?", "Yes", "No");
             if (!confirm) return;
 
-            var isDeleted = await _viewModel.DeleteContact(contact.Id);
+            var isDeleted = await _viewModel.DeleteContact(contact._Id);
             if (isDeleted)
             {
                 RefreshList();
@@ -119,7 +119,7 @@ public partial class ContactPage : ContentPage
     public async void OnEditSwipeInvoked(object sender, EventArgs e)
     {
         if (sender is SwipeItem { BindingContext: Contact contact })
-            await Shell.Current.GoToAsync($"{nameof(EditContactPage)}?Id={contact.Id}");
+            await Shell.Current.GoToAsync($"{nameof(EditContactPage)}?Id={contact._Id}");
     }
 
     private void OnSwipeEnded(object sender, SwipeEndedEventArgs e) => _isSwiping = true;
@@ -128,7 +128,7 @@ public partial class ContactPage : ContentPage
     {
         if (_isSwiping) { _isSwiping = false; return; }
         if (sender is BindableObject { BindingContext: Contact contact })
-            await Shell.Current.GoToAsync($"{nameof(DetailsContactPage)}?Id={contact.Id}");
+            await Shell.Current.GoToAsync($"{nameof(DetailsContactPage)}?Id={contact._Id}");
     }
 
     public async void BtnAddContact_Clicked(object sender, EventArgs e)

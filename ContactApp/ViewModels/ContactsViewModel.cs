@@ -22,6 +22,7 @@ namespace ContactApp.ViewModels
             try
             {
                 var contacts = await _service.GetContactsAsync();
+                Console.WriteLine($"+++++++++++++++++++++++ Loaded contacts: {contacts.Count}");
                 Contacts.Clear();
 
                 foreach (var contact in contacts)
@@ -61,7 +62,7 @@ namespace ContactApp.ViewModels
                 var response = await _service.UpdateContactAsync(contact);
                 if (response.IsSuccessStatusCode)
                 {
-                    var existingContact = Contacts.FirstOrDefault(c => c.Id == contact.Id);
+                    var existingContact = Contacts.FirstOrDefault(c => c._Id == contact._Id);
                     if (existingContact != null)
                     {
                         existingContact.Name = contact.Name;
@@ -89,14 +90,14 @@ namespace ContactApp.ViewModels
             }
         }
 
-        public async Task<bool> DeleteContact(int contactId)
+        public async Task<bool> DeleteContact(string contactId)
         {
             try
             {
                 var response = await _service.DeleteContactAsync(contactId);
                 if (response.IsSuccessStatusCode)
                 {
-                    var existingContact = Contacts.FirstOrDefault(c => c.Id == contactId);
+                    var existingContact = Contacts.FirstOrDefault(c => c._Id == contactId);
                     if (existingContact != null)
                     {
                         Contacts.Remove(existingContact);

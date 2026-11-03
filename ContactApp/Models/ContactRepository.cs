@@ -17,14 +17,14 @@ namespace ContactApp.Models
             return contacts;
         }
 
-        public static Contact? GetContactById(int id)
+        public static Contact? GetContactById(string id)
         {
-            return contacts.FirstOrDefault(c => c.Id == id);
+            return contacts.FirstOrDefault(c => c._Id == id);
         }
 
         public static void UpdateContact(Contact contact)
         {
-            var existingContact = GetContactById(contact.Id);
+            var existingContact = GetContactById(contact._Id);
             if (existingContact != null)
             {
                 existingContact.Name = contact.Name;
@@ -39,7 +39,7 @@ namespace ContactApp.Models
             contacts.Add(contact);
         }
 
-        public static void DeleteContact(int id)
+        public static void DeleteContact(string id)
         {
             var contactToDelete = GetContactById(id);
             if (contactToDelete != null)
