@@ -140,5 +140,15 @@ namespace ContactApp.ViewModels
 
             return false;
         }
+
+        public async Task<bool> AddImportedContacts(List<Contact> importedContacts)
+        {
+            foreach (var contact in importedContacts)
+            {
+                await AddContact(contact);
+            }
+
+            return true;
+        }
     }
 }

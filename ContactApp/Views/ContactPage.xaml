@@ -117,15 +117,33 @@
             </CollectionView>
 
         </RefreshView>
-        <Button x:Name="btnAddContact"
-         Grid.Row="2"
-         Text="Add Contact"
-         BackgroundColor="#1A73E8"
-         TextColor="White"
-         FontSize="16"
-         CornerRadius="8"
-         HeightRequest="48"
-         Margin="16,8"
-         Clicked="BtnAddContact_Clicked" />
+
+
+        <Grid Grid.Row="2"
+          ColumnDefinitions="2*,*"
+          ColumnSpacing="12"
+          Padding="16,8">
+
+            <Button x:Name="btnAddContact"
+                Grid.Column="0"
+                Text="Add Contact"
+                BackgroundColor="#1A73E8"
+                TextColor="White"
+                FontSize="16"
+                CornerRadius="8"
+                HeightRequest="10"
+                Clicked="BtnAddContact_Clicked" />
+
+            <Button x:Name="btnImportContacts"
+                Grid.Column="1"
+                Text="Import"
+                BackgroundColor="Coral"
+                TextColor="White"
+                FontSize="16"
+                CornerRadius="8"
+                HeightRequest="10"
+                Clicked="BtnImportContacts_Clicked" />
+        </Grid>
     </Grid>
+        
 </ContentPage>

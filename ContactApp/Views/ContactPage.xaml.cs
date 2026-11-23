@@ -1,5 +1,6 @@
 using ContactApp.Models;
 using ContactApp.ViewModels;
+using Xamarin.Google.Crypto.Tink.Signature;
 using Communication = Microsoft.Maui.ApplicationModel.Communication;
 using Contact = ContactApp.Models.Contact;
 
@@ -8,7 +9,6 @@ namespace ContactApp.Views;
 public partial class ContactPage : ContentPage
 {
     private bool _isSwiping;
-    private bool _phoneContactsImported;
     private CancellationTokenSource? _searchCts;
     private string _currentSearch = string.Empty;
 
@@ -20,6 +20,7 @@ public partial class ContactPage : ContentPage
         _viewModel = viewModel;
         BindingContext = _viewModel;
     }
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -32,7 +33,21 @@ public partial class ContactPage : ContentPage
         RefreshList();
     }
 
-    private async Task ImportPhoneContactsAsync()
+    private async void RefreshList()
+    {
+        if (string.IsNullOrWhiteSpace(_currentSearch))
+        {
+            await _viewModel.LoadCommand.ExecuteAsync(null);
+        }
+        else
+        {
+            await _viewModel.GetContactByName(_currentSearch);
+        }
+
+        BindingContext = _viewModel;
+    }
+
+    private async Task<List<Contact>> ImportPhoneContactsAsync()
     {
         var status = await Permissions.CheckStatusAsync<Permissions.ContactsRead>();
         if (status != PermissionStatus.Granted)
@@ -42,7 +57,7 @@ public partial class ContactPage : ContentPage
         {
             await DisplayAlertAsync("Permission Denied",
                 "Access to contacts is denied. Please enable it in settings.", "OK");
-            return;
+            return new List<Contact>();
         }
 
         try
@@ -53,41 +68,44 @@ public partial class ContactPage : ContentPage
                 .Where(n => n.Length > 0)
                 .ToHashSet();
 
+            List<Contact> importedContacts = new List<Contact>();
+
             foreach (var pc in phoneContacts ?? Enumerable.Empty<Communication.Contact>())
             {
-                var number = pc.Phones.FirstOrDefault()?.PhoneNumber ?? string.Empty;
-                var key = Normalize(number);
+                string phone = pc.Phones.FirstOrDefault()?.PhoneNumber ?? string.Empty;
+                var key = Normalize(phone);
                 if (key.Length == 0 || !known.Add(key)) continue;
 
-                var name = !string.IsNullOrWhiteSpace(pc.DisplayName)
+                string name = !string.IsNullOrWhiteSpace(pc.DisplayName)
                     ? pc.DisplayName
                     : $"{pc.GivenName} {pc.FamilyName}".Trim();
 
-                ContactRepository.AddContact(new Contact(name, number));
+                string email = pc.Emails.FirstOrDefault()?.EmailAddress ?? string.Empty;
+
+                var existingContact = _viewModel.Contacts.FirstOrDefault(c => c.PhoneNumber == phone);
+
+                if (existingContact == null)
+                {
+                    importedContacts.Add(new Contact(name, phone, email));
+                }
+
+               
+
             }
+
+            return importedContacts;
         }
         catch (Exception ex)
         {
-            await DisplayAlertAsync("Error", ex.Message, "OK");
+            await DisplayAlertAsync("Error", ex.Message, "OK");  
         }
+
+        return new List<Contact>();
     }
 
     private static string Normalize(string? n) =>
         new string((n ?? string.Empty).Where(char.IsDigit).ToArray());
 
-    private async void RefreshList()
-    {
-        if (string.IsNullOrWhiteSpace(_currentSearch))
-        {
-            await _viewModel.LoadCommand.ExecuteAsync(null);
-        } 
-        else
-        {
-            await _viewModel.GetContactByName(_currentSearch);
-        }
-
-        BindingContext = _viewModel;
-    }
 
     public async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
@@ -134,5 +152,25 @@ public partial class ContactPage : ContentPage
     public async void BtnAddContact_Clicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync(nameof(AddContactPage));
+    }
+
+    public async void BtnImportContacts_Clicked(object sender, EventArgs e)
+    {
+        var importedContacts = await ImportPhoneContactsAsync();
+
+        if (importedContacts.Count == 0)
+        {
+            await DisplayAlertAsync("No Contacts Found", "No new contacts were found to import.", "OK");
+            return;
+        }
+
+        bool confirm = await DisplayAlertAsync("Import Contacts",
+            $"Are you sure you want to import {importedContacts.Count} contacts?", "Yes", "No");
+
+        if (!confirm) return;
+        
+        await _viewModel.AddImportedContacts(importedContacts);
+        
+        RefreshList();
     }
 }

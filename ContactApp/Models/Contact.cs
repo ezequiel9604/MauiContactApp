@@ -11,15 +11,14 @@ namespace ContactApp.Models
         public string Email { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public Location? Coordinates { get; set; } = null;
-
         public bool IsDeleted { get; set; } = false;
 
         public Contact() { }
 
         public Contact(string name, string phone)
         {
-            Initials = GetInitials(name);
             Name = name;
+            Initials = GetInitials(name);
             PhoneNumber = phone;
         }
 
