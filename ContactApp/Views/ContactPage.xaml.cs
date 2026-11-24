@@ -173,4 +173,10 @@ public partial class ContactPage : ContentPage
         
         RefreshList();
     }
+
+    public async void BtnSorting_Clicked(object sender, EventArgs e)
+    {
+        Console.WriteLine("------------------------------ Sorting Contacts");
+        //await Shell.Current.GoToAsync(nameof(SortingPage));
+    }
 }
