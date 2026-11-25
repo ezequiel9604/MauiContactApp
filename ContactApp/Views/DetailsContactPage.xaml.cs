@@ -1,3 +1,4 @@
+using ContactApp.Helpers;
 using ContactApp.ViewModels;
 using Contact = ContactApp.Models.Contact;
 
@@ -25,6 +26,12 @@ public partial class DetailsContactPage : ContentPage
     {
         _contact = _viewModel.Contacts.FirstOrDefault(c => c._Id == id);
         BindingContext = _contact;
+
+        if (_contact != null)
+        {
+            string vCard = VCardHelper.ToVCard(_contact);
+            qrView.Value = vCard;
+        }
     }
 
     private async void BtnViewMap_Clicked(object sender, EventArgs e)

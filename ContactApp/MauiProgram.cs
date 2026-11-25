@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using ContactApp.Services;
 using ContactApp.Views;
 using ContactApp.ViewModels;
+using ZXing.Net.Maui.Controls;
 
 namespace ContactApp
 {
@@ -14,6 +15,8 @@ namespace ContactApp
 
             builder
             .UseMauiApp<App>()
+            // Initialize the ZXing.Net.MAUI library by adding the below line of code
+            .UseBarcodeReader()
             // Initialize the .NET MAUI Community Toolkit by adding the below line of code
             .UseMauiCommunityToolkit()
             // After initializing the .NET MAUI Community Toolkit, optionally add additional fonts

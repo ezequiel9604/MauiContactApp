@@ -1,6 +1,5 @@
 using ContactApp.Models;
 using ContactApp.ViewModels;
-using Xamarin.Google.Crypto.Tink.Signature;
 using Communication = Microsoft.Maui.ApplicationModel.Communication;
 using Contact = ContactApp.Models.Contact;
 

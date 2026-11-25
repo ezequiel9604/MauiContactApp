@@ -1,118 +1,166 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            x:Class="ContactApp.Views.DetailsContactPage"
-            Title="Contact Details">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="ContactApp.Views.DetailsContactPage"
+             Title="Contact Details">
 
     <ContentPage.Resources>
         <!-- Field caption -->
-        <Style x:Key="FieldLabel" TargetType="Label">
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="TextColor" Value="#8E8E93" />
-            <Setter Property="Margin" Value="4,0,0,0" />
+        <Style x:Key="FieldLabel"
+               TargetType="Label">
+            <Setter Property="FontSize"
+                    Value="13" />
+            <Setter Property="TextColor"
+                    Value="#8E8E93" />
+            <Setter Property="Margin"
+                    Value="4,0,0,0" />
         </Style>
 
         <!-- Field card -->
-        <Style x:Key="FieldCard" TargetType="Border">
-            <Setter Property="BackgroundColor" Value="White" />
-            <Setter Property="StrokeThickness" Value="0" />
-            <Setter Property="StrokeShape" Value="RoundRectangle 12" />
-            <Setter Property="Padding" Value="14,12" />
+        <Style x:Key="FieldCard"
+               TargetType="Border">
+            <Setter Property="BackgroundColor"
+                    Value="White" />
+            <Setter Property="StrokeThickness"
+                    Value="0" />
+            <Setter Property="StrokeShape"
+                    Value="RoundRectangle 12" />
+            <Setter Property="Padding"
+                    Value="14,12" />
             <Setter Property="Shadow">
-                <Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.06" />
+                <Shadow Brush="Black"
+                        Offset="0,2"
+                        Radius="6"
+                        Opacity="0.06" />
             </Setter>
         </Style>
 
         <!-- Field value -->
-        <Style x:Key="FieldValue" TargetType="Label">
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextColor" Value="#1C1C1E" />
-            <Setter Property="LineBreakMode" Value="WordWrap" />
+        <Style x:Key="FieldValue"
+               TargetType="Label">
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="TextColor"
+                    Value="#1C1C1E" />
+            <Setter Property="LineBreakMode"
+                    Value="WordWrap" />
         </Style>
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*,Auto">
-
         <ScrollView Grid.Row="0">
-            <VerticalStackLayout Padding="20,0,20,20" Spacing="10">
+            <VerticalStackLayout Padding="20,0,20,20"
+                                 Spacing="10">
 
                 <!-- Avatar -->
                 <Border WidthRequest="100"
-                    HeightRequest="100"
-                    BackgroundColor="#E8F0FE"
-                    StrokeThickness="0"
-                    StrokeShape="RoundRectangle 50"
-                    HorizontalOptions="Center"
-                    Margin="0,20,0,4">
+                        HeightRequest="100"
+                        Margin="0,20,0,4"
+                        BackgroundColor="#E8F0FE"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 50"
+                        HorizontalOptions="Center">
                     <Label Text="{Binding Initials}"
-                        TextColor="#1A73E8"
-                        FontSize="36"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center" />
+                           FontSize="36"
+                           FontAttributes="Bold"
+                           TextColor="#1A73E8"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
                 </Border>
 
                 <!-- Name under avatar -->
                 <Label Text="{Binding Name}"
-                    FontSize="20"
-                    FontAttributes="Bold"
-                    TextColor="#1C1C1E"
-                    HorizontalOptions="Center"
-                    Margin="0,0,0,10" />
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="#1C1C1E"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,10" />
 
                 <!-- Name -->
                 <VerticalStackLayout Spacing="4">
-                    <Label Text="Name" Style="{StaticResource FieldLabel}" />
+                    <Label Text="Name"
+                           Style="{StaticResource FieldLabel}" />
+
                     <Border Style="{StaticResource FieldCard}">
-                        <Label Text="{Binding Name}" Style="{StaticResource FieldValue}" />
+                        <Label Text="{Binding Name}"
+                               Style="{StaticResource FieldValue}" />
                     </Border>
                 </VerticalStackLayout>
 
                 <!-- Phone -->
                 <VerticalStackLayout Spacing="4">
-                    <Label Text="Phone" Style="{StaticResource FieldLabel}" />
+                    <Label Text="Phone"
+                           Style="{StaticResource FieldLabel}" />
+
                     <Border Style="{StaticResource FieldCard}">
-                        <Label Text="{Binding PhoneNumber}" Style="{StaticResource FieldValue}" />
+                        <Label Text="{Binding PhoneNumber}"
+                               Style="{StaticResource FieldValue}" />
                     </Border>
                 </VerticalStackLayout>
 
                 <!-- Email -->
                 <VerticalStackLayout Spacing="4">
-                    <Label Text="Email" Style="{StaticResource FieldLabel}" />
+                    <Label Text="Email"
+                           Style="{StaticResource FieldLabel}" />
+
                     <Border Style="{StaticResource FieldCard}">
-                        <Label Text="{Binding Email}" Style="{StaticResource FieldValue}" />
+                        <Label Text="{Binding Email}"
+                               Style="{StaticResource FieldValue}" />
                     </Border>
                 </VerticalStackLayout>
 
                 <!-- Address -->
                 <VerticalStackLayout Spacing="4">
-                    <Label Text="Address" Style="{StaticResource FieldLabel}" />
-                    <Border Style="{StaticResource FieldCard}">
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
-                            <Label Grid.Column="0"
-                            Text="{Binding Address}"
-                            Style="{StaticResource FieldValue}"
-                            VerticalOptions="Center" />
+                    <Label Text="Address"
+                           Style="{StaticResource FieldLabel}" />
 
-                            <Button Grid.Column="1"
-                            x:Name="btnViewMap"
-                            Text="View on Map"
-                            FontSize="12"
-                            FontAttributes="Bold"
-                            TextColor="#1A73E8"
-                            BackgroundColor="#E8F0FE"
-                            CornerRadius="8"
-                            Padding="12,0"
-                            HeightRequest="32"
-                            VerticalOptions="Center"
-                            Clicked="BtnViewMap_Clicked" />
+                    <Border Style="{StaticResource FieldCard}">
+                        <Grid ColumnDefinitions="*,Auto"
+                              ColumnSpacing="10">
+                            <Label Grid.Column="0"
+                                   Text="{Binding Address}"
+                                   Style="{StaticResource FieldValue}"
+                                   VerticalOptions="Center" />
+
+                            <Button x:Name="btnViewMap"
+                                    Grid.Column="1"
+                                    Text="View on Map"
+                                    FontSize="12"
+                                    FontAttributes="Bold"
+                                    TextColor="#1A73E8"
+                                    BackgroundColor="#E8F0FE"
+                                    CornerRadius="8"
+                                    Padding="12,0"
+                                    HeightRequest="32"
+                                    VerticalOptions="Center"
+                                    Clicked="BtnViewMap_Clicked" />
                         </Grid>
                     </Border>
                 </VerticalStackLayout>
 
+                <!-- QR code -->
+                <VerticalStackLayout Spacing="4"
+                                     VerticalOptions="Center">
+                    <Border x:Name="qrContainer"
+                            Padding="16"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 12"
+                            StrokeThickness="0"
+                            HorizontalOptions="Center">
+                        <zxing:BarcodeGeneratorView x:Name="qrView"
+                                                    Format="QrCode"
+                                                    ForegroundColor="Black"
+                                                    WidthRequest="200"
+                                                    HeightRequest="200" />
+                    </Border>
+
+                    <Label Text="Scan with your phone's camera"
+                           TextColor="#8E8E93"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
             </VerticalStackLayout>
         </ScrollView>
-
-
     </Grid>
 </ContentPage>
