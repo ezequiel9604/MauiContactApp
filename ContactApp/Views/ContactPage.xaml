@@ -9,9 +9,9 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
         <Grid Grid.Row="0"
-      ColumnDefinitions="*,Auto"
-      ColumnSpacing="8"
-      Padding="0,8,16,6">
+              ColumnDefinitions="*,Auto"
+              ColumnSpacing="8"
+              Padding="0,8,16,6">
 
             <SearchBar x:Name="searchBar"
                Grid.Column="0"
@@ -23,15 +23,16 @@
                TextChanged="SearchBar_TextChanged" />
 
             <ImageButton x:Name="btnSorting"
-             Grid.Column="1"
-             Source="sort_icon.png"
-             BackgroundColor="Transparent"
-             WidthRequest="18"
-             HeightRequest="18"
-             Padding="8"
-             Aspect="AspectFit"
-             VerticalOptions="Center"
-             Clicked="BtnSorting_Clicked" />
+                 Grid.Column="1"
+                 Source="sort_icon.png"
+                 BackgroundColor="Transparent"
+                 CornerRadius="8"
+                 WidthRequest="18"
+                 HeightRequest="18"
+                 Padding="8"
+                 Aspect="AspectFit"
+                 VerticalOptions="Center"
+                 Clicked="BtnSorting_Clicked" />
         </Grid>
         <!-- Search Bar -->
        

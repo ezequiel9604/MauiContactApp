@@ -12,9 +12,12 @@ namespace ContactApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<Contact>> GetContactsAsync()
+        public async Task<List<Contact>> GetContactsAsync(bool sorting = false)
         {
-            var response = await _httpClient.GetFromJsonAsync<List<Contact>>("contacts");
+
+            string apiUrl = sorting ? "contacts?sort=desc" : "contacts";
+
+            var response = await _httpClient.GetFromJsonAsync<List<Contact>>(apiUrl);
 
             if (response == null)
             {

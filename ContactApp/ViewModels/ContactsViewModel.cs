@@ -16,13 +16,14 @@ namespace ContactApp.ViewModels
             _service = service;
         }
 
+        public bool IsSorting { get; set; } = false;
+
         [RelayCommand]
         async Task LoadAsync()
         {
             try
             {
-                var contacts = await _service.GetContactsAsync();
-                Console.WriteLine($"+++++++++++++++++++++++ Loaded contacts: {contacts.Count}");
+                var contacts = await _service.GetContactsAsync(IsSorting);
                 Contacts.Clear();
 
                 foreach (var contact in contacts)

@@ -87,9 +87,6 @@ public partial class ContactPage : ContentPage
                 {
                     importedContacts.Add(new Contact(name, phone, email));
                 }
-
-               
-
             }
 
             return importedContacts;
@@ -175,7 +172,17 @@ public partial class ContactPage : ContentPage
 
     public async void BtnSorting_Clicked(object sender, EventArgs e)
     {
-        Console.WriteLine("------------------------------ Sorting Contacts");
-        //await Shell.Current.GoToAsync(nameof(SortingPage));
+        _viewModel.IsSorting = !_viewModel.IsSorting;
+
+        if(_viewModel.IsSorting)
+        {
+            btnSorting.BackgroundColor = Colors.LightGray;
+        }
+        else
+        {
+            btnSorting.BackgroundColor = Colors.Transparent;
+        }
+
+        RefreshList();
     }
 }
